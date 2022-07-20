@@ -2,9 +2,9 @@
   "name": "project_1",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/app.js",
   "scripts": {
-    "start": "node dist/app.js"
+    "start": "node ./bin/www",
+    "serve": "node dist/app.js"
   },
   "keywords": [],
   "author": "",
