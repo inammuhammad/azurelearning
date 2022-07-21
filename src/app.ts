@@ -1,7 +1,10 @@
 import express from 'express';
 import {AppRouter} from './routes';
+import cors from 'cors';
 const app = express();
 const port = process.env.PORT || 80;
+
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
