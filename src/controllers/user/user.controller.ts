@@ -1,23 +1,23 @@
 import {Request, Response} from 'express';
 import { IUser } from '../../models/IUser';
-import { SuccessResponse, ResponseStatusString } from '../../utils/app-response';
+import { UserService } from '../../services/user/user.service';
+import { SuccessResponse, ResponseStatusString, BadRequestResponse } from '../../utils/app-response';
 
 export class UserController {
     public static async List(req: Request, res: Response) {
-        const users: IUser[] = [{
-            email: 'user1@domain.com',
-            id: 1,
-            name: 'User 1'
-        }, {
-            email: 'user2@domain.com',
-            id: 2,
-            name: 'User 2'
-        }, {
-            email: 'user3@domain.com',
-            id: 3,
-            name: 'User 3'
-        }];
+        const userService: UserService = new UserService();
+        const users: IUser[] = await userService.list();
         const response = new SuccessResponse(res, ResponseStatusString.SUCCESS, users);
         response.send();
+    }
+
+    public static async Create(req: Request, res: Response) {
+        const user: IUser = {...req.body} as any;
+        const userService: UserService = new UserService();
+        let response: SuccessResponse | BadRequestResponse | undefined = undefined;
+        await userService.create(user)
+                .then(resp => response = new SuccessResponse(res, ResponseStatusString.SUCCESS, resp))
+                .catch(error => response = new BadRequestResponse(res, error))
+                .finally(() => response?.send());
     }
 }

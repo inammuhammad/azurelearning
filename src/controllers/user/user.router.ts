@@ -4,4 +4,6 @@ import { UserController } from './user.controller';
 
 export const UserRouter = express.Router();
 
-UserRouter.get('/list', asyncWrapper(UserController.List))
+UserRouter.get('/list', asyncWrapper(UserController.List));
+
+UserRouter.post('/', asyncWrapper(UserController.Create));

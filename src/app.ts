@@ -4,6 +4,7 @@ import cors from 'cors';
 import { MongoProvider } from './server';
 const app = express();
 const port = process.env.PORT || 80;
+app.use(express.json());
 
 MongoProvider.init()
   .then(() => {
